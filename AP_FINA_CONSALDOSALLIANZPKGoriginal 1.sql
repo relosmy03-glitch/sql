@@ -2,30 +2,30 @@ create or replace PACKAGE BODY Ap_fina_ConSaldosAllianzPkg AS
 
 dblSalIniLoc_g SPC___.SPC____SALINILOC_B%TYPE;  -- Saldo inicial en moneda local
 dblSalIniOri_g SPC___.SPC____SALINILOC_B%TYPE;  -- Saldo inicial en moneda origen
-dblDebiLoca__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento débito en moneda local
-dblCredLoca__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento crédito en moneda local
-dblDebiOrig__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento débito en moneda origen
-dblCredOrig__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento crédito en moneda origen
+dblDebiLoca__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento dÃ©bito en moneda local
+dblCredLoca__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento crÃ©dito en moneda local
+dblDebiOrig__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento dÃ©bito en moneda origen
+dblCredOrig__g SPC___.SPC____SALINILOC_B%TYPE;  -- Movimiento crÃ©dito en moneda origen
 dblSalFinLoc_g SPC___.SPC____SALINILOC_B%TYPE;  -- Saldo final en moneda local
 dblSalFinOri_g SPC___.SPC____SALINILOC_B%TYPE;  -- Saldo final en moneda origen
 chrIndHijSal_g VARCHAR2(1);                     -- Indicador de si las cuentas hijas tuvieron saldo
 intFacNatCue_g NUMBER(1);                       -- Naturaleza de la cuenta
 
 -- Variable que llena el procedimiento CalcularSaldoCuenta1 para optimizar el proceso
-chrCodPlaCue_g SPC___.SPC____CODIGO____PC_____B%TYPE; -- Código plan de cuentas
+chrCodPlaCue_g SPC___.SPC____CODIGO____PC_____B%TYPE; -- CÃ³digo plan de cuentas
 chrNatuSald__g CPC___.CPC____NATUSALD__B%TYPE;        -- Naturaleza del saldo de la cuenta
-chrCodPerFis_g PERIOD.PERIOD_CODIGO____PF_____B%TYPE; -- Código del período fiscal
-intNumePeri__g PERIOD.PERIOD_NUMERO____B%TYPE;        -- Número del período
-chrFecIniPer_g PERIOD.PERIOD_FECHINIC__B%TYPE;        -- Fecha inicial del período
-chrFecFinPer_g PERIOD.PERIOD_FECHFINA__B%TYPE;        -- Fecha final del período
+chrCodPerFis_g PERIOD.PERIOD_CODIGO____PF_____B%TYPE; -- CÃ³digo del perÃ­odo fiscal
+intNumePeri__g PERIOD.PERIOD_NUMERO____B%TYPE;        -- NÃºmero del perÃ­odo
+chrFecIniPer_g PERIOD.PERIOD_FECHINIC__B%TYPE;        -- Fecha inicial del perÃ­odo
+chrFecFinPer_g PERIOD.PERIOD_FECHFINA__B%TYPE;        -- Fecha final del perÃ­odo
 
 --Req. 6903 LVELASQUEZ Leonardo Velasquez
 dblSalIniLo1_g NUMBER(20,2);             -- Saldo inicial en moneda local
 dblSalIniOr1_g NUMBER(20,2);             -- Saldo inicial en moneda origen
-dblDebiLoc1__g NUMBER(20,2);             -- Movimiento débito en moneda local
-dblCredLoc1__g NUMBER(20,2);             -- Movimiento crédito en moneda local
-dblDebiOri1__g NUMBER(20,2);             -- Movimiento débito en moneda origen
-dblCredOri1__g NUMBER(20,2);             -- Movimiento crédito en moneda origen
+dblDebiLoc1__g NUMBER(20,2);             -- Movimiento dÃ©bito en moneda local
+dblCredLoc1__g NUMBER(20,2);             -- Movimiento crÃ©dito en moneda local
+dblDebiOri1__g NUMBER(20,2);             -- Movimiento dÃ©bito en moneda origen
+dblCredOri1__g NUMBER(20,2);             -- Movimiento crÃ©dito en moneda origen
 dblSalFinLo1_g NUMBER(20,2);             -- Saldo final en moneda local
 dblSalFinOr1_g NUMBER(20,2);             -- Saldo final en moneda origen
 
@@ -118,9 +118,9 @@ PROCEDURE Ap_fina_ConSaldos2 (
 
   i number;
   intCursSele__t INTEGER;           -- ID del cursor dinamico
-  intNumLinPro_t NUMBER(6);         -- Número de lineas procesadas
+  intNumLinPro_t NUMBER(6);         -- NÃºmero de lineas procesadas
   pComillas VARCHAR2(4);
-  chrTextSele__t VARCHAR2(20000);   --SQL dinámico
+  chrTextSele__t VARCHAR2(20000);   --SQL dinÃ¡mico
   chrCodiCont__t MC____.MC_____CODIGO____CONTAB_B%TYPE;
   chrFecSystem_t MC____.MC_____FECHA_____B%TYPE;
   CURSOR curConsCuentas__t IS
@@ -198,7 +198,7 @@ BEGIN
     EXCEPTION
        WHEN NO_DATA_FOUND THEN
           chrIndValExi_p := 'N';
-          chrCadeErro__p := chr(13) || chrcadeerro__p ||' ERROR. Parámetro para contabilidad por defecto NO EXISTE';
+          chrCadeErro__p := chr(13) || chrcadeerro__p ||' ERROR. ParÃ¡metro para contabilidad por defecto NO EXISTE';
        WHEN OTHERS THEN
          TRAZAFOGP(SQLERRM);
    END;
@@ -221,7 +221,7 @@ BEGIN
    IF( chrIndValExi_p = 'S' ) THEN
       IF( NVL(intSecuInte__p, -999) <= 0 ) THEN
          chrIndValExi_p := 'N';
-         chrCadeErro__p := chr(13) || chrcadeerro__p || 'CONSECUTIVO NO VÁLIDO';
+         chrCadeErro__p := chr(13) || chrcadeerro__p || 'CONSECUTIVO NO VÃLIDO';
       ELSE
          --intCursSele__t := DBMS_SQL.OPEN_CURSOR;
          IF( chrCodiCont__t = chrCodiCont__p ) THEN
@@ -355,41 +355,41 @@ END EliminarProceso;
 
 
 FUNCTION SaldosCuenta(
-chrCodiCont__p IN SPC___.SPC____CODIGO____CONTAB_B%TYPE, -- Código de contabilidad
+chrCodiCont__p IN SPC___.SPC____CODIGO____CONTAB_B%TYPE, -- CÃ³digo de contabilidad
 chrCodiCuen__p IN SPC___.SPC____CODIGO____CPC____B%TYPE, -- Cuenta
 chrFechInic__p IN DATE,                                  -- Fecha inicial 
 chrFechFina__p IN DATE,                                  -- Fecha final 
 chrInclAjus__p IN VARCHAR2,                              -- Indicador de si incluye ajustes
 chrInclCier__p IN VARCHAR2,                              -- Indicador de si incluye cierres
-chrCodCenUti_p IN SPCCU_.SPCCU__CODIGO____CU_____B%TYPE, -- Código de centro de utilidad
+chrCodCenUti_p IN SPCCU_.SPCCU__CODIGO____CU_____B%TYPE, -- CÃ³digo de centro de utilidad
 chrIncArbCen_p IN VARCHAR2,                              -- Indicador de si incluye arbol de centros
-intIdenTerc__p IN SPCT__.SPCT___IDENTIFIC_TERCER_B%TYPE  -- Identificación del tercero
+intIdenTerc__p IN SPCT__.SPCT___IDENTIFIC_TERCER_B%TYPE  -- IdentificaciÃ³n del tercero
 ) RETURN VARCHAR2 IS
 
 dblSILoFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo inicial en moneda local para la fecha inicial 
 dblSIOrFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo inicial en moneda origen para la fecha inicial 
-dblDeLoFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento débito en moneda local para la fecha inicial 
-dblCrLoFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crédito en moneda local para la fecha inicial 
-dblDeOrFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento débito en moneda origen para la fecha inicial 
-dblCrOrFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crédito en moneda origen para la fecha inicial 
+dblDeLoFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento dÃ©bito en moneda local para la fecha inicial 
+dblCrLoFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crÃ©dito en moneda local para la fecha inicial 
+dblDeOrFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento dÃ©bito en moneda origen para la fecha inicial 
+dblCrOrFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crÃ©dito en moneda origen para la fecha inicial 
 dblSFLoFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo final en moneda local para la fecha inicial 
 dblSFOrFeIn__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo final en moneda origen para la fecha inicial 
 
 dblSILoFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo inicial en moneda local para la fecha final 
 dblSIOrFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo inicial en moneda origen para la fecha final 
-dblDeLoFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento débito en moneda local para la fecha final 
-dblCrLoFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crédito en moneda local para la fecha final 
-dblDeOrFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento débito en moneda origen para la fecha final 
-dblCrOrFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crédito en moneda origen para la fecha final 
+dblDeLoFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento dÃ©bito en moneda local para la fecha final 
+dblCrLoFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crÃ©dito en moneda local para la fecha final 
+dblDeOrFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento dÃ©bito en moneda origen para la fecha final 
+dblCrOrFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crÃ©dito en moneda origen para la fecha final 
 dblSFLoFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo final en moneda local para la fecha final 
 dblSFOrFeFi__t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo final en moneda origen para la fecha final 
 
 dblSalIniLoc_t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo inicial en moneda local
 dblSalIniOri_t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo inicial en moneda origen
-dblDebiLoca__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento débito en moneda local
-dblCredLoca__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crédito en moneda local
-dblDebiOrig__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento débito en moneda origen
-dblCredOrig__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crédito en moneda origen
+dblDebiLoca__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento dÃ©bito en moneda local
+dblCredLoca__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crÃ©dito en moneda local
+dblDebiOrig__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento dÃ©bito en moneda origen
+dblCredOrig__t SPC___.SPC____SALINILOC_B%TYPE;       -- Movimiento crÃ©dito en moneda origen
 dblSalFinLoc_t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo final en moneda local
 dblSalFinOri_t SPC___.SPC____SALINILOC_B%TYPE;       -- Saldo final en moneda origen
 chrIndHijSal_t VARCHAR2(1);
@@ -406,20 +406,20 @@ BEGIN
   --
   -- Calcula el saldo para la fecha final 
   -- 
-  CalcularSaldoCuenta(chrCodiCont__p,  -- Código de contabilidad
+  CalcularSaldoCuenta(chrCodiCont__p,  -- CÃ³digo de contabilidad
                       chrCodiCuen__p,  -- Cuenta
                       chrFechFina__p,  -- Fecha
                       chrInclAjus__p,  -- Indicador de si incluye ajustes
                       chrInclCier__p,  -- Indicador de si incluye cierres
-                      chrCodCenUti_p,  -- Código de centro de utilidad
+                      chrCodCenUti_p,  -- CÃ³digo de centro de utilidad
                       chrIncArbCen_p,  -- Indicador de si incluye arbol de centros
-                      intIdenTerc__p,  -- Identificación del tercero
+                      intIdenTerc__p,  -- IdentificaciÃ³n del tercero
                       dblSILoFeFi__t,  -- Saldo inicial en moneda local
                       dblSIOrFeFi__t,  -- Saldo inicial en moneda origen
-                      dblDeLoFeFi__t,  -- Movimiento débito en moneda local
-                      dblCrLoFeFi__t,  -- Movimiento crédito en moneda local
-                      dblDeOrFeFi__t,  -- Movimiento débito en moneda origen
-                      dblCrOrFeFi__t,  -- Movimiento crédito en moneda origen
+                      dblDeLoFeFi__t,  -- Movimiento dÃ©bito en moneda local
+                      dblCrLoFeFi__t,  -- Movimiento crÃ©dito en moneda local
+                      dblDeOrFeFi__t,  -- Movimiento dÃ©bito en moneda origen
+                      dblCrOrFeFi__t,  -- Movimiento crÃ©dito en moneda origen
                       dblSFLoFeFi__t,  -- Saldo final en moneda local
                       dblSFOrFeFi__t,  -- Saldo final en moneda origen
                       chrIndHijSal_t);
@@ -428,7 +428,7 @@ BEGIN
   intNumMesFec_t := EXTRACT(MONTH FROM chrFechInic__p);
   intNumAnoFec_t := EXTRACT(YEAR FROM chrFechInic__p);
   IF intNumDiaFec_t = 1 AND intNumMesFec_t = 1 THEN
-    -- La fecha inicial es el primer dáa del aáo, los valores que se devuelven
+    -- La fecha inicial es el primer dÃ¡a del aÃ¡o, los valores que se devuelven
     -- son los calculados para la fecha final  
     dblSalIniLoc_t := dblSILoFeFi__t;
     dblSalIniOri_t := dblSIOrFeFi__t;
@@ -440,36 +440,36 @@ BEGIN
     dblSalFinOri_t := dblSFOrFeFi__t;
 
   ELSE
-    -- La fecha inicial no es el primer dáa del aáo, se deben calcular los valores 
-    -- para el dáa anterior a esta fecha y hacer las operaciones correspondientes 
+    -- La fecha inicial no es el primer dÃ¡a del aÃ¡o, se deben calcular los valores 
+    -- para el dÃ¡a anterior a esta fecha y hacer las operaciones correspondientes 
 
     datDiaAntFI__t := (chrFechInic__p - 1);
 
     --
-    -- Calcula el saldo para el dáa anterior a la la fecha inicial 
+    -- Calcula el saldo para el dÃ¡a anterior a la la fecha inicial 
     -- 
-    CalcularSaldoCuenta(chrCodiCont__p,  -- Código de contabilidad
+    CalcularSaldoCuenta(chrCodiCont__p,  -- CÃ³digo de contabilidad
                         chrCodiCuen__p,  -- Cuenta
                         datDiaAntFI__t,  -- Fecha
                         chrInclAjus__p,  -- Indicador de si incluye ajustes
                         chrInclCier__p,  -- Indicador de si incluye cierres
-                        chrCodCenUti_p,  -- Código de centro de utilidad
+                        chrCodCenUti_p,  -- CÃ³digo de centro de utilidad
                         chrIncArbCen_p,  -- Indicador de si incluye arbol de centros
-                        intIdenTerc__p,  -- Identificación del tercero
+                        intIdenTerc__p,  -- IdentificaciÃ³n del tercero
                         dblSILoFeIn__t,  -- Saldo inicial en moneda local
                         dblSIOrFeIn__t,  -- Saldo inicial en moneda origen
-                        dblDeLoFeIn__t,  -- Movimiento débito en moneda local
-                        dblCrLoFeIn__t,  -- Movimiento crédito en moneda local
-                        dblDeOrFeIn__t,  -- Movimiento débito en moneda origen
-                        dblCrOrFeIn__t,  -- Movimiento crédito en moneda origen
+                        dblDeLoFeIn__t,  -- Movimiento dÃ©bito en moneda local
+                        dblCrLoFeIn__t,  -- Movimiento crÃ©dito en moneda local
+                        dblDeOrFeIn__t,  -- Movimiento dÃ©bito en moneda origen
+                        dblCrOrFeIn__t,  -- Movimiento crÃ©dito en moneda origen
                         dblSFLoFeIn__t,  -- Saldo final en moneda local
                         dblSFOrFeIn__t,  -- Saldo final en moneda origen
                         chrIndHijSal_t);
 
-    -- El saldo inicial es el saldo final para el dáa anterior a la fecha inicial 
+    -- El saldo inicial es el saldo final para el dÃ¡a anterior a la fecha inicial 
     dblSalIniLoc_t := dblSFLoFeIn__t;
     dblSalIniOri_t := dblSFOrFeIn__t;
-    -- Los débitos y los créditos es la resta de los valores a la fecha final - menos los valores a la fecha inicial 
+    -- Los dÃ©bitos y los crÃ©ditos es la resta de los valores a la fecha final - menos los valores a la fecha inicial 
     dblDebiLoca__t := dblDeLoFeFi__t - dblDeLoFeIn__t;
     dblCredLoca__t := dblCrLoFeFi__t - dblCrLoFeIn__t;
     dblDebiOrig__t := dblDeOrFeFi__t - dblDeOrFeIn__t;
@@ -493,20 +493,20 @@ BEGIN
 END SaldosCuenta;
 
 PROCEDURE CalcularSaldoCuenta(
-chrCodiCont__p IN SPC___.SPC____CODIGO____CONTAB_B%TYPE, -- Código de contabilidad
+chrCodiCont__p IN SPC___.SPC____CODIGO____CONTAB_B%TYPE, -- CÃ³digo de contabilidad
 chrCodiCuen__p IN SPC___.SPC____CODIGO____CPC____B%TYPE, -- Cuenta
 chrFechSald__p IN DATE,                                  -- Fecha
 chrInclAjus__p IN VARCHAR2,                              -- Indicador de si incluye ajustes
 chrInclCier__p IN VARCHAR2,                              -- Indicador de si incluye cierres
-chrCodCenUti_p IN SPCCU_.SPCCU__CODIGO____CU_____B%TYPE, -- Código de centro de utilidad
+chrCodCenUti_p IN SPCCU_.SPCCU__CODIGO____CU_____B%TYPE, -- CÃ³digo de centro de utilidad
 chrIncArbCen_p IN VARCHAR2,                              -- Indicador de si incluye arbol de centros
-intIdenTerc__p IN SPCT__.SPCT___IDENTIFIC_TERCER_B%TYPE, -- Identificación del tercero
+intIdenTerc__p IN SPCT__.SPCT___IDENTIFIC_TERCER_B%TYPE, -- IdentificaciÃ³n del tercero
 dblSalIniLoc_p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Saldo inicial en moneda local
 dblSalIniOri_p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Saldo inicial en moneda origen
-dblDebiLoca__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento débito en moneda local
-dblCredLoca__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento crédito en moneda local
-dblDebiOrig__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento débito en moneda origen
-dblCredOrig__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento crédito en moneda origen
+dblDebiLoca__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento dÃ©bito en moneda local
+dblCredLoca__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento crÃ©dito en moneda local
+dblDebiOrig__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento dÃ©bito en moneda origen
+dblCredOrig__p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Movimiento crÃ©dito en moneda origen
 dblSalFinLoc_p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Saldo final en moneda local
 dblSalFinOri_p OUT SPC___.SPC____SALINILOC_B%TYPE,       -- Saldo final en moneda origen
 chrIndHijSal_p OUT VARCHAR2
@@ -517,11 +517,11 @@ chrIndBusMC__t VARCHAR2(1);  -- Indica si se debe buscar movimiento en MC___
 chrCodPlaBas_t PC____.PC_____CODIGO____B%TYPE;
 chrCodPlaEsp_t PC____.PC_____CODIGO____B%TYPE;
 
-chrCodPerFis_t PERIOD.PERIOD_CODIGO____PF_____B%TYPE;  -- Período fiscal de la fecha especificada
-intNumePeri__t PERIOD.PERIOD_NUMERO____B%TYPE;         -- Período de la fecha especificada
-chrFecIniPer_t PERIOD.PERIOD_FECHINIC__B%TYPE;         -- Fecha inicial del período de la fecha especificada
-chrFecFinPer_t PERIOD.PERIOD_FECHFINA__B%TYPE;         -- Fecha final del período de la fecha especificada
-intUltPerSal_t PERIOD.PERIOD_NUMERO____B%TYPE;         -- Último período a tomar de saldos
+chrCodPerFis_t PERIOD.PERIOD_CODIGO____PF_____B%TYPE;  -- PerÃ­odo fiscal de la fecha especificada
+intNumePeri__t PERIOD.PERIOD_NUMERO____B%TYPE;         -- PerÃ­odo de la fecha especificada
+chrFecIniPer_t PERIOD.PERIOD_FECHINIC__B%TYPE;         -- Fecha inicial del perÃ­odo de la fecha especificada
+chrFecFinPer_t PERIOD.PERIOD_FECHFINA__B%TYPE;         -- Fecha final del perÃ­odo de la fecha especificada
+intUltPerSal_t PERIOD.PERIOD_NUMERO____B%TYPE;         -- Ãšltimo perÃ­odo a tomar de saldos
 
 intNatuCuen__t NUMBER(1);  -- Naturaleza de la cuenta
 chrCodCenIni_t CU____.CU_____CODIGO____B%TYPE;
@@ -1317,8 +1317,8 @@ BEGIN
   --IF chrCodPlaCue_g IS NOT NULL THEN
   IF chrCodPlaCue_g IS NULL THEN
     BEGIN
-      SELECT DECODE(PC_____INDPLAESP_B, 'N', PC_____CODIGO____B, PC_____CODIGO____PC_____B),  -- Plan básico
-             DECODE(PC_____INDPLAESP_B, 'S', PC_____CODIGO____B, '-1')                        -- Plan específico
+      SELECT DECODE(PC_____INDPLAESP_B, 'N', PC_____CODIGO____B, PC_____CODIGO____PC_____B),  -- Plan bÃ¡sico
+             DECODE(PC_____INDPLAESP_B, 'S', PC_____CODIGO____B, '-1')                        -- Plan especÃ­fico
       INTO chrCodPlaBas_t, chrCodPlaEsp_t
       FROM CONTAB, PC____
       WHERE CONTAB_CODIGO____PC_____B = PC_____CODIGO____B
@@ -1335,7 +1335,7 @@ BEGIN
     chrCodPlaEsp_t := 'xxxx';
   END IF;
 
-  -- Se determina el período de la fecha actual
+  -- Se determina el perÃ­odo de la fecha actual
   --ALBV01 REQ. 41R1-004984. SE VALIDA PARA CUANDO LA VARIABLE GLOGAL SEA NULA. PARA QUE GENERE SALDOS
   --EN FOGAFIN SI SE DEJA CON LA VALIDACION IS NOT NULL NO GENERA SALDOS.
   --IF chrCodPerFis_g IS NOT NULL THEN
@@ -1348,7 +1348,7 @@ BEGIN
       WHERE chrFechSald__p BETWEEN PERIOD_FECHINIC__B AND PERIOD_FECHFINA__B;
     EXCEPTION
       WHEN NO_DATA_FOUND THEN
-        RAISE_APPLICATION_ERROR(-20050, 'La fecha no corresponde a ningún período (' || chrFechSald__p || ')|');
+        RAISE_APPLICATION_ERROR(-20050, 'La fecha no corresponde a ningÃºn perÃ­odo (' || chrFechSald__p || ')|');
     END;
   ELSE
     -- Req. 4824
@@ -1359,12 +1359,12 @@ BEGIN
   END IF;
 
   IF chrFecFinPer_t <> chrFechSald__p THEN
-    -- No se pide el saldo al final de un período, se debe buscar en MC____ y el
-    -- último período que se toma de saldos es el anterior al de la fecha especificada.
+    -- No se pide el saldo al final de un perÃ­odo, se debe buscar en MC____ y el
+    -- Ãºltimo perÃ­odo que se toma de saldos es el anterior al de la fecha especificada.
     chrIndBusMC__t := 'S';
     intUltPerSal_t := intNumePeri__t - 1;
   ELSE
-    -- Todos los valores se toman de saldos y hasta el período de la fecha especificada.
+    -- Todos los valores se toman de saldos y hasta el perÃ­odo de la fecha especificada.
     chrIndBusMC__t := 'N';
     intUltPerSal_t := intNumePeri__t;
   END IF;
@@ -1524,3 +1524,4 @@ END CalcularSaldoCuenta;
 
 
 END Ap_fina_ConSaldosAllianzPkg;
+/
